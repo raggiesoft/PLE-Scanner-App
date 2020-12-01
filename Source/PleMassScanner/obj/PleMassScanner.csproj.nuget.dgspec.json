@@ -1,0 +1,75 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Micha\\OneDrive - Old Dominion University\\Center for Learning and Teaching\\Documents\\PLE Scanner App\\PLE Scanner\\PleMassScanner\\PleMassScanner.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Micha\\OneDrive - Old Dominion University\\Center for Learning and Teaching\\Documents\\PLE Scanner App\\PLE Scanner\\PleMassScanner\\PleMassScanner.csproj": {
+      "version": "2.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Micha\\OneDrive - Old Dominion University\\Center for Learning and Teaching\\Documents\\PLE Scanner App\\PLE Scanner\\PleMassScanner\\PleMassScanner.csproj",
+        "projectName": "plescan2",
+        "projectPath": "C:\\Users\\Micha\\OneDrive - Old Dominion University\\Center for Learning and Teaching\\Documents\\PLE Scanner App\\PLE Scanner\\PleMassScanner\\PleMassScanner.csproj",
+        "packagesPath": "C:\\Users\\Micha\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Micha\\OneDrive - Old Dominion University\\Center for Learning and Teaching\\Documents\\PLE Scanner App\\PLE Scanner\\PleMassScanner\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Micha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0-windows7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0-windows7.0": {
+            "targetAlias": "net5.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0-windows7.0": {
+          "targetAlias": "net5.0-windows",
+          "dependencies": {
+            "Microsoft.Web.WebView2": {
+              "target": "Package",
+              "version": "[1.0.664.37, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

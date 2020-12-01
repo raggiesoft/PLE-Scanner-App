@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "60YLpfSki8nb1YV/xr1RnuvdFjaouM1ioU6ndn4PhXzdm6QtfdEKB1iagenOeHSy8Ms1ETyhGwmgxi4scEhRjg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Micha\\OneDrive - Old Dominion University\\Center for Learning and Teaching\\Documents\\PLE Scanner App\\PLE Scanner\\PleMassScanner\\PleMassScanner.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Micha\\.nuget\\packages\\microsoft.web.webview2\\1.0.664.37\\microsoft.web.webview2.1.0.664.37.nupkg.sha512",
+    "C:\\Users\\Micha\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\5.0.0\\microsoft.netcore.app.runtime.win-x64.5.0.0.nupkg.sha512",
+    "C:\\Users\\Micha\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\5.0.0\\microsoft.windowsdesktop.app.runtime.win-x64.5.0.0.nupkg.sha512",
+    "C:\\Users\\Micha\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\5.0.0\\microsoft.aspnetcore.app.runtime.win-x64.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

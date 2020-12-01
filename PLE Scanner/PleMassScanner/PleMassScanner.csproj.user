@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_LastSelectedProfileId>C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="frmMassScan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ScannerLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ScanProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>

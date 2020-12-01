@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Authors>RaggieSoft</Authors>
+    <Product>PLE QA Scanner</Product>
+    <PackageIcon>scanner-crop.png</PackageIcon>
+    <ApplicationIcon>ple-main.ico</ApplicationIcon>
+    <AssemblyName>plescan2</AssemblyName>
+    <Version>2.0.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath></OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\ICO\win-10\scanner-crop.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.664.37" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="plescan2.visualelementsmanifest.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

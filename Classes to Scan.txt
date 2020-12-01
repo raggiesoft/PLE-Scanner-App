@@ -1,0 +1,37 @@
+PLE QA Scan List
+
+Class: biol405w, Semester: Fall, Year: 2020
+Class: bnal606, Semester: Fall, Year: 2020
+Class: chem173t, Semester: Fall, Year: 2020
+Class: comm270a, Semester: Fall, Year: 2020
+Class: comm315w2, Semester: Fall, Year: 2020
+Class: comm346, Semester: Fall, Year: 2020
+Class: comm445, Semester: Fall, Year: 2020
+Class: comm479w, Semester: Fall, Year: 2020
+Class: cs150, Semester: Fall, Year: 2020
+Class: cs471, Semester: Fall, Year: 2020
+Class: cs723, Semester: Fall, Year: 2020
+Class: cyse301, Semester: Fall, Year: 2020
+Class: danc185a, Semester: Fall, Year: 2020
+Class: fin317, Semester: Fall, Year: 2020
+Class: fin616, Semester: Fall, Year: 2020
+Class: foun722a, Semester: Fall, Year: 2020
+Class: hist356, Semester: Fall, Year: 2020
+Class: it360, Semester: Fall, Year: 2020
+Class: math102m, Semester: Fall, Year: 2020
+Class: mba601, Semester: Fall, Year: 2020
+Class: met300, Semester: Fall, Year: 2020
+Class: met465, Semester: Fall, Year: 2020
+Class: mgmt361, Semester: Fall, Year: 2020
+Class: mls351, Semester: Fall, Year: 2020
+Class: nurs357, Semester: Fall, Year: 2020
+Class: nurs492, Semester: Fall, Year: 2020
+Class: ppcm726, Semester: Fall, Year: 2020
+Class: psyc410, Semester: Fall, Year: 2020
+Class: soc309, Semester: Fall, Year: 2020
+Class: stat130m, Semester: Fall, Year: 2020
+Class: stat405, Semester: Fall, Year: 2020
+
+--NOT FOUND--
+Class: phil203e3, Semester: Fall, Year: 2020, Notes: Class Not Found
+Class: seps303, Semester: Fall, Year: 2020, Notes: Class Not Found

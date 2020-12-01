@@ -1,0 +1,6 @@
+C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\publish\plescan2.visualelementsmanifest.xml
+C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\publish\plescan2.exe
+C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\publish\plescan2.dll
+C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\publish\plescan2.deps.json
+C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\publish\plescan2.runtimeconfig.json
+C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\publish\plescan2.pdb

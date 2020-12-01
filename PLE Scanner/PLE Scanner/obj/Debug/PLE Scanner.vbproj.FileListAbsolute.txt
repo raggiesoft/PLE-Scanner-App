@@ -1,0 +1,24 @@
+C:\Users\mragsdal\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\bin\Debug\plescan.exe.config
+C:\Users\mragsdal\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\bin\Debug\plescan.exe
+C:\Users\mragsdal\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\bin\Debug\plescan.pdb
+C:\Users\mragsdal\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\bin\Debug\plescan.xml
+C:\Users\mragsdal\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\PLE Scanner.vbprojAssemblyReference.cache
+C:\Users\mragsdal\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\PLE_Scanner.frmScanner.resources
+C:\Users\mragsdal\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\PLE_Scanner.Resources.resources
+C:\Users\mragsdal\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\PLE Scanner.vbproj.GenerateResource.cache
+C:\Users\mragsdal\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\PLE Scanner.vbproj.CoreCompileInputs.cache
+C:\Users\mragsdal\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\plescan.exe
+C:\Users\mragsdal\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\plescan.xml
+C:\Users\mragsdal\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\plescan.pdb
+C:\Users\Micha\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\bin\Debug\plescan.exe.config
+C:\Users\Micha\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\bin\Debug\plescan.exe
+C:\Users\Micha\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\bin\Debug\plescan.pdb
+C:\Users\Micha\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\bin\Debug\plescan.xml
+C:\Users\Micha\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\PLE_Scanner.frmScanner.resources
+C:\Users\Micha\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\PLE_Scanner.Resources.resources
+C:\Users\Micha\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\PLE Scanner.vbproj.GenerateResource.cache
+C:\Users\Micha\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\PLE Scanner.vbproj.CoreCompileInputs.cache
+C:\Users\Micha\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\plescan.exe
+C:\Users\Micha\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\plescan.xml
+C:\Users\Micha\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\plescan.pdb
+C:\Users\Micha\Box Sync\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PLE Scanner\obj\Debug\PLE Scanner.vbprojAssemblyReference.cache

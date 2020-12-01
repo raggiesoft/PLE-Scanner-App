@@ -1,0 +1,16 @@
+PLE QA Scanner Instructions
+===========================
+
+PLE QA Scanner 1.0
+------------------
+
+First, be sure you have Microsoft .NET Framework 4.8 installed.  You can get it here: https://dotnet.microsoft.com/download/dotnet-framework/net48 (you only need the runtime, not the developer pack).  Setup should've already done that for you if needed.
+
+Instructions for use: type in the name of the class, select the semester, and year.  Click execute job to bring PLE up in your default browser.  You may be asked to log in, then PLE will take care of the rest.
+
+PLE QA Scanner 2.0
+------------------
+
+This allows you to scan multiple classes at once, while attempting to not overwhelm PLE's scanning server. It is expecting list of classes to scan in the CourseID format. For example, bnal610b_201810. To create a list of your classes to scan, simply copy the first cell from swat_scanningAssignments into a new blank workbook (be sure to use the Assignment filter to only select what is assigned to you), then save as a Comma Separated Value (CSV) file.  Open that CSV file in the scanner, and it will happily get to work. Optionally, you have the ability to pause the first item to give you a chance to log in. You can also set up the delay between job launches since PLE can be finicky about launching too many scan jobs at once.
+
+Once the scan is over, the tool will optionally show you a log if it was unable to start the job on any classes. The log will be saved in %PERSONAL%\PLEScan (date and time).htm if a log of your scanning needs to be emailed to a supervisor. %PERSONAL% usually maps to your Documents folder.
