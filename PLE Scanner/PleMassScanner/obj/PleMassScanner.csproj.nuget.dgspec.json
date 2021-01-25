@@ -5,7 +5,7 @@
   },
   "projects": {
     "C:\\Users\\Micha\\OneDrive - Old Dominion University\\Center for Learning and Teaching\\Documents\\PLE Scanner App\\PLE Scanner\\PleMassScanner\\PleMassScanner.csproj": {
-      "version": "2.0.0",
+      "version": "2.0.1",
       "restore": {
         "projectUniqueName": "C:\\Users\\Micha\\OneDrive - Old Dominion University\\Center for Learning and Teaching\\Documents\\PLE Scanner App\\PLE Scanner\\PleMassScanner\\PleMassScanner.csproj",
         "projectName": "plescan2",
@@ -43,12 +43,6 @@
       "frameworks": {
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
-          "dependencies": {
-            "Microsoft.Web.WebView2": {
-              "target": "Package",
-              "version": "[1.0.664.37, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -67,7 +61,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -4,10 +4,26 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "PLE QA Scanner"
-#define MyAppVersion "2.0"
+#define MyAppVersion "2.0.1"
 #define MyAppPublisher "RaggieSoft"
 #define MyAppURL "https://raggiesoft.com"
 #define MyAppExeName "plescan.exe"
+
+// contribute: https://github.com/DomGries/InnoDependencyInstaller
+// official article: https://codeproject.com/Articles/20868/Inno-Setup-Dependency-Installer
+
+// comment out dependency defines to disable installing them
+#define UseMsi45
+
+//#define UseDotNet11
+#define UseDotNet48
+
+// requires netcorecheck.exe and netcorecheck_x64.exe (see download link below)
+#define UseNetCoreCheck
+#ifdef UseNetCoreCheck
+  #define UseDotNet50
+  #define UseDotNet50Desktop
+#endif
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -47,15 +63,19 @@ VersionInfoProductTextVersion=2.0.0.0
 SetupIconFile=ICO\ple-install.ico
 WizardImageFile=ICO\WizModernImage.bmp
 WizardSmallImageFile=ICO\WizModernSmallImage.bmp
-PrivilegesRequired=lowest
+PrivilegesRequired=admin
 
 [Registry]
-Root: "HKCU"; Subkey: "SOFTWARE\{#MyAppPublisher}\{#MyAppName}"; ValueType: string; ValueName: "Path"; ValueData: "{app}"; Flags: uninsdeletekeyifempty
+Root: "HKLM"; Subkey: "SOFTWARE\{#MyAppPublisher}\{#MyAppName}"; ValueType: string; ValueName: "Path"; ValueData: "{app}"; Flags: uninsdeletekeyifempty
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
+; .NET Checker
+Source: "netcorecheck.exe"; Flags: dontcopy noencryption
+Source: "netcorecheck_x64.exe"; Flags: dontcopy noencryption
+
 ; Instructions
 Source: "Instructions.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "License.txt"; DestDir: "{app}"; Flags: ignoreversion
@@ -68,846 +88,10 @@ Source: "PLE Scanner\PLE Scanner\bin\Release\plescan.visualelementsmanifest.xml"
 Source: "PLE Scanner\PLE Scanner\bin\Release\plescan.xml"; DestDir: "{app}\ple1"; Flags: ignoreversion; Components: ple1
 
 ;PLE 2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\x86\WebView2Loader.dll"; DestDir: "{app}\ple2\x86"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\x64\WebView2Loader.dll"; DestDir: "{app}\ple2\x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hant\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hant"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\zh-Hans\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\zh-Hans"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\x86\WebView2Loader.dll"; DestDir: "{app}\ple2\win-x64\x86"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\x64\WebView2Loader.dll"; DestDir: "{app}\ple2\win-x64\x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\tr\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\tr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ru\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\ru"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ref\plescan2.dll"; DestDir: "{app}\ple2\win-x64\ref"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pt-BR\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\pt-BR"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\pl\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\pl"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ko\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\ko"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ja\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\ja"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\it\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\it"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\fr\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\fr"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\es\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\es"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\de\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\de"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\WindowsFormsIntegration.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\WindowsBase.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\UIAutomationTypes.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\UIAutomationProvider.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\UIAutomationClientSideProviders.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\UIAutomationClient.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\System.Xaml.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\System.Windows.Input.Manipulations.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\System.Windows.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\System.Windows.Forms.Primitives.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\System.Windows.Forms.Design.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\System.Windows.Controls.Ribbon.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\ReachFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\PresentationUI.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\PresentationFramework.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\PresentationCore.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\cs\Microsoft.VisualBasic.Forms.resources.dll"; DestDir: "{app}\ple2\win-x64\cs"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\arm64\WebView2Loader.dll"; DestDir: "{app}\ple2\win-x64\arm64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\wpfgfx_cor3.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\WindowsFormsIntegration.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\WindowsBase.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\WebView2Loader.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\vcruntime140_cor3.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\UIAutomationTypes.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\UIAutomationProvider.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\UIAutomationClientSideProviders.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\UIAutomationClient.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ucrtbase.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Xml.XPath.XDocument.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Xml.XPath.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Xml.XmlSerializer.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Xml.XmlDocument.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Xml.XDocument.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Xml.Serialization.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Xml.ReaderWriter.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Xml.Linq.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Xml.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Xaml.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Windows.Presentation.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Windows.Input.Manipulations.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Windows.Forms.Primitives.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Windows.Forms.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Windows.Forms.Design.Editors.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Windows.Forms.Design.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Windows.Extensions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Windows.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Windows.Controls.Ribbon.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Web.HttpUtility.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Web.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.ValueTuple.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Transactions.Local.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Transactions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Threading.Timer.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Threading.ThreadPool.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Threading.Thread.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Threading.Tasks.Parallel.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Threading.Tasks.Extensions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Threading.Tasks.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Threading.Tasks.Dataflow.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Threading.Overlapped.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Threading.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Threading.Channels.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Threading.AccessControl.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Text.RegularExpressions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Text.Json.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Text.Encodings.Web.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Text.Encoding.Extensions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Text.Encoding.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Text.Encoding.CodePages.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.ServiceProcess.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.ServiceModel.Web.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.SecureString.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Principal.Windows.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Principal.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Permissions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Cryptography.Xml.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Cryptography.X509Certificates.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Cryptography.ProtectedData.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Cryptography.Primitives.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Cryptography.Pkcs.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Cryptography.OpenSsl.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Cryptography.Encoding.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Cryptography.Csp.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Cryptography.Cng.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Cryptography.Algorithms.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.Claims.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Security.AccessControl.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.Serialization.Xml.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.Serialization.Primitives.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.Serialization.Json.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.Serialization.Formatters.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.Serialization.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.Numerics.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.Loader.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.Intrinsics.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.InteropServices.RuntimeInformation.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.InteropServices.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.Handles.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.Extensions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.CompilerServices.VisualC.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Resources.Writer.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Resources.ResourceManager.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Resources.Reader.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Resources.Extensions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Reflection.TypeExtensions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Reflection.Primitives.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Reflection.Metadata.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Reflection.Extensions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Reflection.Emit.Lightweight.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Reflection.Emit.ILGeneration.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Reflection.Emit.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Reflection.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Reflection.DispatchProxy.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Private.Xml.Linq.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Private.Xml.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Private.Uri.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Private.DataContractSerialization.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Private.CoreLib.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Printing.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.ObjectModel.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Numerics.Vectors.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Numerics.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.WebSockets.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.WebSockets.Client.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.WebProxy.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.WebHeaderCollection.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.WebClient.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.Sockets.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.ServicePoint.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.Security.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.Requests.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.Primitives.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.Ping.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.NetworkInformation.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.NameResolution.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.Mail.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.HttpListener.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.Http.Json.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.Http.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Net.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Memory.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Linq.Queryable.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Linq.Parallel.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Linq.Expressions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Linq.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.UnmanagedMemoryStream.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.Pipes.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.Pipes.AccessControl.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.Packaging.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.MemoryMappedFiles.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.IsolatedStorage.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.FileSystem.Watcher.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.FileSystem.Primitives.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.FileSystem.DriveInfo.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.FileSystem.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.FileSystem.AccessControl.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.Compression.ZipFile.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.Compression.FileSystem.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.Compression.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.IO.Compression.Brotli.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Globalization.Extensions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Globalization.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Globalization.Calendars.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Formats.Asn1.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Dynamic.Runtime.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Drawing.Primitives.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Drawing.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Drawing.Design.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Drawing.Common.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.DirectoryServices.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Diagnostics.Tracing.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Diagnostics.TraceSource.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Diagnostics.Tools.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Diagnostics.TextWriterTraceListener.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Diagnostics.StackTrace.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Diagnostics.Process.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Diagnostics.PerformanceCounter.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Diagnostics.FileVersionInfo.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Diagnostics.EventLog.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Diagnostics.DiagnosticSource.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Diagnostics.Debug.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Diagnostics.Contracts.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Design.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Data.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Data.DataSetExtensions.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Data.Common.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Core.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Console.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Configuration.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Configuration.ConfigurationManager.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.ComponentModel.TypeConverter.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.ComponentModel.Primitives.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.ComponentModel.EventBasedAsync.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.ComponentModel.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.ComponentModel.DataAnnotations.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.ComponentModel.Annotations.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Collections.Specialized.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Collections.NonGeneric.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Collections.Immutable.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Collections.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Collections.Concurrent.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.CodeDom.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.Buffers.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\System.AppContext.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\ReachFramework.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationUI.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationNative_cor3.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationFramework.Royale.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationFramework.Luna.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationFramework.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationFramework.Classic.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationFramework.AeroLite.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationFramework.Aero2.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationFramework.Aero.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationFramework-SystemXmlLinq.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationFramework-SystemXml.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationFramework-SystemDrawing.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationFramework-SystemData.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationFramework-SystemCore.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PresentationCore.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\plescan2.visualelementsmanifest.xml"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\plescan2.runtimeconfig.json"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\plescan2.runtimeconfig.dev.json"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\plescan2.pdb"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\plescan2.exe"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\plescan2.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\plescan2.deps.json"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\PenImc_cor3.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\netstandard.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\mscorrc.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\mscorlib.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\mscordbi.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\mscordaccore_amd64_amd64_5.0.20.51904.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\mscordaccore.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Microsoft.Win32.SystemEvents.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Microsoft.Win32.Registry.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Microsoft.Win32.Registry.AccessControl.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Microsoft.Win32.Primitives.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Microsoft.Web.WebView2.Wpf.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Microsoft.Web.WebView2.WinForms.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Microsoft.Web.WebView2.Core.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Microsoft.VisualBasic.Forms.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Microsoft.VisualBasic.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Microsoft.VisualBasic.Core.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Microsoft.DiaSymReader.Native.amd64.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Microsoft.CSharp.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\hostpolicy.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\hostfxr.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\DirectWriteForwarder.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\dbgshim.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\D3DCompiler_47_cor3.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\createdump.exe"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\coreclr.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\clrjit.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\clretwrc.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\clrcompression.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-utility-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-time-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-string-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-stdio-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-runtime-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-process-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-private-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-multibyte-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-math-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-locale-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-heap-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-filesystem-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-environment-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-convert-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-crt-conio-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-util-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-timezone-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-sysinfo-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-synch-l1-2-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-synch-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-string-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-rtlsupport-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-profile-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-processthreads-l1-1-1.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-processthreads-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-processenvironment-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-namedpipe-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-memory-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-localization-l1-2-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-libraryloader-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-interlocked-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-heap-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-handle-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-file-l2-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-file-l1-2-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-file-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-errorhandling-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-debug-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-datetime-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-console-l1-2-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\api-ms-win-core-console-l1-1-0.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\win-x64\Accessibility.dll"; DestDir: "{app}\ple2\win-x64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\runtimes\win-x86\native\WebView2Loader.dll"; DestDir: "{app}\ple2\runtimes\win-x86\native"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\runtimes\win-x64\native\WebView2Loader.dll"; DestDir: "{app}\ple2\runtimes\win-x64\native"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\runtimes\win-arm\native\WebView2Loader.dll"; DestDir: "{app}\ple2\runtimes\win-arm\native"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\ref\plescan2.dll"; DestDir: "{app}\ple2\ref"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18\Social"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18\Other"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18\manifest.json"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18\manifest.fingerprint"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18\LICENSE"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18\Fingerprinting"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18\Entities"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18\Cryptomining"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18\Content"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18\CompatExceptions"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18\Analytics"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18\Advertising"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules\9.18.0\manifest.json"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules\9.18.0"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules\9.18.0\manifest.fingerprint"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules\9.18.0"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules\9.18.0\LICENSE.txt"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules\9.18.0"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules\9.18.0\Filtering Rules"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules\9.18.0"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\SmartScreen\local\warnStateCache"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\SmartScreen\local"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\SmartScreen\local\download_cache"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\SmartScreen\local"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\SmartScreen\local\cache"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\SmartScreen\local"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\ShaderCache\GPUCache\index"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\ShaderCache\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\ShaderCache\GPUCache\data_3"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\ShaderCache\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\ShaderCache\GPUCache\data_2"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\ShaderCache\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\ShaderCache\GPUCache\data_1"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\ShaderCache\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\ShaderCache\GPUCache\data_0"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\ShaderCache\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\GrShaderCache\GPUCache\index"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\GrShaderCache\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\GrShaderCache\GPUCache\data_3"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\GrShaderCache\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\GrShaderCache\GPUCache\data_2"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\GrShaderCache\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\GrShaderCache\GPUCache\data_1"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\GrShaderCache\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\GrShaderCache\GPUCache\data_0"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\GrShaderCache\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315\shopping_fre.html"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315\shoppingfre.js"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315\shopping.js"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315\shopping.html"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315\manifest.json"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315\manifest.fingerprint"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315\edge_driver.js"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315\edge_checkout_page_validator.js"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB\MANIFEST-000001"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB\CURRENT"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB\000003.log"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database\MANIFEST-000001"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database\CURRENT"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database\000003.log"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata\MANIFEST-000001"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata\CURRENT"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata\000003.log"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Sessions\Tabs_13251328337808242"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Sessions"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Sessions\Tabs_13251327512901805"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Sessions"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Session Storage\MANIFEST-000001"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Session Storage"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Session Storage\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Session Storage"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Session Storage\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Session Storage"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Session Storage\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Session Storage"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Session Storage\CURRENT"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Session Storage"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Session Storage\000003.log"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Session Storage"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications\MANIFEST-000001"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications\CURRENT"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications\000003.log"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb\MANIFEST-000001"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb\CURRENT"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb\000003.log"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\GPUCache\index"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\GPUCache\data_3"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\GPUCache\data_2"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\GPUCache\data_1"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\GPUCache\data_0"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\GPUCache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB\MANIFEST-000001"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB\CURRENT"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB\000003.log"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\AvailabilityDB\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\AvailabilityDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\AvailabilityDB\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\AvailabilityDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\AvailabilityDB\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\AvailabilityDB"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Extension State\MANIFEST-000001"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Extension State"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Extension State\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Extension State"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Extension State\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Extension State"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Extension State\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Extension State"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Extension State\CURRENT"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Extension State"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Extension State\000003.log"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Extension State"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\EdgePushStorageWithConnectTokenAndKey\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\EdgePushStorageWithConnectTokenAndKey"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\EdgePushStorageWithConnectTokenAndKey\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\EdgePushStorageWithConnectTokenAndKey"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\EdgePushStorageWithConnectTokenAndKey\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\EdgePushStorageWithConnectTokenAndKey"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb\MANIFEST-000020"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb\CURRENT"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb\000021.log"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Code Cache\wasm\index-dir\the-real-index"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Code Cache\wasm\index-dir"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Code Cache\wasm\index"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Code Cache\wasm"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Code Cache\js\index-dir\the-real-index"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Code Cache\js\index-dir"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Code Cache\js\index"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Code Cache\js"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Cache\index"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Cache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Cache\f_000003"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Cache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Cache\f_000002"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Cache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Cache\f_000001"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Cache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Cache\data_3"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Cache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Cache\data_2"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Cache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Cache\data_1"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Cache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Cache\data_0"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Cache"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase\MANIFEST-000001"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase\CURRENT"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase\000003.log"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase\MANIFEST-000001"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase\LOG.old"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase\LOG"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase\LOCK"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase\CURRENT"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase\000003.log"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Web Data-journal"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Web Data"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Visited Links"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\TransportSecurity"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Top Sites-journal"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Top Sites"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Shortcuts-journal"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Shortcuts"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Secure Preferences"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Reporting and NEL-journal"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Reporting and NEL"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\README"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\previews_opt_out.db-journal"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\previews_opt_out.db"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Preferences"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Network Persistent State"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Network Action Predictor-journal"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Network Action Predictor"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Media History-journal"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Media History"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Login Data-journal"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Login Data"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\History-journal"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\History Provider Cache"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\History"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\heavy_ad_intervention_opt_out.db-journal"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\heavy_ad_intervention_opt_out.db"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Favicons-journal"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Favicons"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Cookies-journal"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Default\Cookies"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Crashpad\throttle_store.dat"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Crashpad"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Crashpad\settings.dat"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Crashpad"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Crashpad\metadata"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Crashpad"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271\_metadata\verified_contents.json"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271\_metadata"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271\manifest.json"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271\manifest.fingerprint"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271\LICENSE"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271\crl-set"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\BrowserMetrics\BrowserMetrics-5FC6A851-4A84.pma"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\BrowserMetrics"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\BrowserMetrics\BrowserMetrics-5FC6A518-5378.pma"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\BrowserMetrics"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\BrowserMetrics\BrowserMetrics-5FC6A463-53BC.pma"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\BrowserMetrics"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\BrowserMetrics\BrowserMetrics-5FC6A419-2F40.pma"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\BrowserMetrics"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\BrowserMetrics\BrowserMetrics-5FC6A3FE-5920.pma"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\BrowserMetrics"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\BrowserMetrics\BrowserMetrics-5FC69C9E-5FAC.pma"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\BrowserMetrics"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\BrowserMetrics\BrowserMetrics-5FC68B9D-58A8.pma"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\BrowserMetrics"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Ad Blocking\blocklist"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Ad Blocking"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Local State"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Last Version"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Last Browser"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\Functional Data"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\CrashpadMetrics.pma"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe.WebView2\EBWebView\CrashpadMetrics-active.pma"; DestDir: "{app}\ple2\plescan2.exe.WebView2\EBWebView"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\arm64\WebView2Loader.dll"; DestDir: "{app}\ple2\arm64"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.dll"; DestDir: "{app}\ple2"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.deps.json"; DestDir: "{app}\ple2"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\Microsoft.Web.WebView2.Wpf.dll"; DestDir: "{app}\ple2"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\Microsoft.Web.WebView2.WinForms.dll"; DestDir: "{app}\ple2"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\Microsoft.Web.WebView2.Core.dll"; DestDir: "{app}\ple2"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\debug.log"; DestDir: "{app}\ple2"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.visualelementsmanifest.xml"; DestDir: "{app}\ple2"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.runtimeconfig.json"; DestDir: "{app}\ple2"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.runtimeconfig.dev.json"; DestDir: "{app}\ple2"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.pdb"; DestDir: "{app}\ple2"; Flags: ignoreversion; Components: ple2
-Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe"; DestDir: "{app}\ple2"; Components: ple2
+Source: "PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\*"; DestDir: "{app}\ple2"; Flags: createallsubdirs recursesubdirs; Components: ple2
 
 ; Source (both PLE 1 and PLE 2)
-Source: "Source\PLE Scanner.sln"; DestDir: "{app}\Source"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\App.config"; DestDir: "{app}\Source\PLE Scanner"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\frmScanner.Designer.vb"; DestDir: "{app}\Source\PLE Scanner"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\frmScanner.resx"; DestDir: "{app}\Source\PLE Scanner"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\frmScanner.vb"; DestDir: "{app}\Source\PLE Scanner"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\PLE Scanner.vbproj"; DestDir: "{app}\Source\PLE Scanner"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\ple-main.ico"; DestDir: "{app}\Source\PLE Scanner"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\plescan.visualelementsmanifest.xml"; DestDir: "{app}\Source\PLE Scanner"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\plescan.xml"; DestDir: "{app}\Source\PLE Scanner"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\My Project\app.manifest"; DestDir: "{app}\Source\PLE Scanner\My Project"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\My Project\Application.Designer.vb"; DestDir: "{app}\Source\PLE Scanner\My Project"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\My Project\Application.myapp"; DestDir: "{app}\Source\PLE Scanner\My Project"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\My Project\AssemblyInfo.vb"; DestDir: "{app}\Source\PLE Scanner\My Project"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\My Project\PLE.vb"; DestDir: "{app}\Source\PLE Scanner\My Project"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\My Project\Resources.Designer.vb"; DestDir: "{app}\Source\PLE Scanner\My Project"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\My Project\Resources.resx"; DestDir: "{app}\Source\PLE Scanner\My Project"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\My Project\Settings.Designer.vb"; DestDir: "{app}\Source\PLE Scanner\My Project"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\My Project\Settings.settings"; DestDir: "{app}\Source\PLE Scanner\My Project"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.vb"; DestDir: "{app}\Source\PLE Scanner\obj\Debug"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\DesignTimeResolveAssemblyReferences.cache"; DestDir: "{app}\Source\PLE Scanner\obj\Debug"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache"; DestDir: "{app}\Source\PLE Scanner\obj\Debug"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\PLE Scanner.vbproj.CoreCompileInputs.cache"; DestDir: "{app}\Source\PLE Scanner\obj\Debug"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\PLE Scanner.vbproj.FileListAbsolute.txt"; DestDir: "{app}\Source\PLE Scanner\obj\Debug"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\PLE Scanner.vbproj.GenerateResource.cache"; DestDir: "{app}\Source\PLE Scanner\obj\Debug"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\PLE Scanner.vbprojAssemblyReference.cache"; DestDir: "{app}\Source\PLE Scanner\obj\Debug"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\plescan.exe"; DestDir: "{app}\Source\PLE Scanner\obj\Debug"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\plescan.pdb"; DestDir: "{app}\Source\PLE Scanner\obj\Debug"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\plescan.xml"; DestDir: "{app}\Source\PLE Scanner\obj\Debug"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\PLE_Scanner.frmScanner.resources"; DestDir: "{app}\Source\PLE Scanner\obj\Debug"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\PLE_Scanner.Resources.resources"; DestDir: "{app}\Source\PLE Scanner\obj\Debug"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Debug\TempPE\My Project.Resources.Designer.vb.dll"; DestDir: "{app}\Source\PLE Scanner\obj\Debug\TempPE"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\.NETFramework,Version=v4.8.AssemblyAttributes.vb"; DestDir: "{app}\Source\PLE Scanner\obj\Release"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\DesignTimeResolveAssemblyReferences.cache"; DestDir: "{app}\Source\PLE Scanner\obj\Release"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\DesignTimeResolveAssemblyReferencesInput.cache"; DestDir: "{app}\Source\PLE Scanner\obj\Release"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\PLE Scanner.vbproj.CoreCompileInputs.cache"; DestDir: "{app}\Source\PLE Scanner\obj\Release"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\PLE Scanner.vbproj.FileListAbsolute.txt"; DestDir: "{app}\Source\PLE Scanner\obj\Release"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\PLE Scanner.vbproj.GenerateResource.cache"; DestDir: "{app}\Source\PLE Scanner\obj\Release"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\PLE Scanner.vbprojAssemblyReference.cache"; DestDir: "{app}\Source\PLE Scanner\obj\Release"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\plescan.exe"; DestDir: "{app}\Source\PLE Scanner\obj\Release"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\plescan.pdb"; DestDir: "{app}\Source\PLE Scanner\obj\Release"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\plescan.xml"; DestDir: "{app}\Source\PLE Scanner\obj\Release"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\PLE_Scanner.frmScanner.resources"; DestDir: "{app}\Source\PLE Scanner\obj\Release"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\PLE_Scanner.Resources.resources"; DestDir: "{app}\Source\PLE Scanner\obj\Release"; Flags: ignoreversion; Components: src
-Source: "Source\PLE Scanner\obj\Release\TempPE\My Project.Resources.Designer.vb.dll"; DestDir: "{app}\Source\PLE Scanner\obj\Release\TempPE"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\frmMassScan.cs"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\frmMassScan.Designer.cs"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\frmMassScan.resx"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\Networking.cs"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\ple-main.ico"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\PleMassScanner.csproj"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\PleMassScanner.csproj.user"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\plescan2.visualelementsmanifest.xml"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\Program.cs"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\ScannerLog.cs"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\ScannerLog.Designer.cs"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\ScannerLog.resx"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\ScanProgress.cs"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\ScanProgress.Designer.cs"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\ScanProgress.resx"; DestDir: "{app}\Source\PleMassScanner"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\PleMassScanner.csproj.nuget.dgspec.json"; DestDir: "{app}\Source\PleMassScanner\obj"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\PleMassScanner.csproj.nuget.g.props"; DestDir: "{app}\Source\PleMassScanner\obj"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\PleMassScanner.csproj.nuget.g.targets"; DestDir: "{app}\Source\PleMassScanner\obj"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\project.assets.json"; DestDir: "{app}\Source\PleMassScanner\obj"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\project.nuget.cache"; DestDir: "{app}\Source\PleMassScanner\obj"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\publish\win-x64\PleMassScanner.csproj.nuget.dgspec.json"; DestDir: "{app}\Source\PleMassScanner\obj\publish\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\publish\win-x64\PleMassScanner.csproj.nuget.g.props"; DestDir: "{app}\Source\PleMassScanner\obj\publish\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\publish\win-x64\PleMassScanner.csproj.nuget.g.targets"; DestDir: "{app}\Source\PleMassScanner\obj\publish\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\publish\win-x64\project.assets.json"; DestDir: "{app}\Source\PleMassScanner\obj\publish\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\publish\win-x64\project.nuget.cache"; DestDir: "{app}\Source\PleMassScanner\obj\publish\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\.NETCoreApp,Version=v5.0.AssemblyAttributes.cs"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\apphost.exe"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\Launcher.exe"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.AssemblyInfo.cs"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.AssemblyInfoInputs.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.assets.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.csproj.CopyComplete"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.csproj.CoreCompileInputs.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.csproj.FileListAbsolute.txt"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.csproj.GenerateResource.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.csprojAssemblyReference.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.designer.deps.json"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.designer.runtimeconfig.json"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.frmMassScan.resources"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.GeneratedMSBuildEditorConfig.editorconfig"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.genruntimeconfig.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.ScannerLog.resources"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.ScanProgress.resources"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\plescan2.designer.deps.json"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\plescan2.designer.runtimeconfig.json"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\plescan2.dll"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\plescan2.pdb"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\PublishOutputs.8ba1551eb5.txt"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\ref\plescan2.dll"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\ref"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\.NETCoreApp,Version=v5.0.AssemblyAttributes.cs"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\apphost.exe"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PleMassScanner.AssemblyInfo.cs"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PleMassScanner.AssemblyInfoInputs.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PleMassScanner.assets.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PleMassScanner.csproj.CopyComplete"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PleMassScanner.csproj.CoreCompileInputs.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PleMassScanner.csproj.FileListAbsolute.txt"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PleMassScanner.csproj.GenerateResource.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PleMassScanner.frmMassScan.resources"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PleMassScanner.GeneratedMSBuildEditorConfig.editorconfig"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PleMassScanner.genruntimeconfig.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PleMassScanner.ScannerLog.resources"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PleMassScanner.ScanProgress.resources"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\plescan2.deps.json"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\plescan2.dll"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\plescan2.pdb"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PublishOutputs.139fe8172a.txt"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\PublishOutputs.8ba1551eb5.txt"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\singlefilehost.exe"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\ref\plescan2.dll"; DestDir: "{app}\Source\PleMassScanner\obj\Release\net5.0-windows\win-x64\ref"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\netcoreapp3.1\.NETCoreApp,Version=v3.1.AssemblyAttributes.cs"; DestDir: "{app}\Source\PleMassScanner\obj\Release\netcoreapp3.1"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\netcoreapp3.1\PleMassScanner.AssemblyInfo.cs"; DestDir: "{app}\Source\PleMassScanner\obj\Release\netcoreapp3.1"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\netcoreapp3.1\PleMassScanner.AssemblyInfoInputs.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\netcoreapp3.1"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\netcoreapp3.1\PleMassScanner.assets.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\netcoreapp3.1"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\netcoreapp3.1\PleMassScanner.csprojAssemblyReference.cache"; DestDir: "{app}\Source\PleMassScanner\obj\Release\netcoreapp3.1"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\netcoreapp3.1\PleMassScanner.designer.deps.json"; DestDir: "{app}\Source\PleMassScanner\obj\Release\netcoreapp3.1"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\obj\Release\netcoreapp3.1\PleMassScanner.designer.runtimeconfig.json"; DestDir: "{app}\Source\PleMassScanner\obj\Release\netcoreapp3.1"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\Properties\PublishProfiles\ClickOnceProfile.pubxml"; DestDir: "{app}\Source\PleMassScanner\Properties\PublishProfiles"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\Properties\PublishProfiles\ClickOnceProfile.pubxml.user"; DestDir: "{app}\Source\PleMassScanner\Properties\PublishProfiles"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\Properties\PublishProfiles\FolderProfile.pubxml"; DestDir: "{app}\Source\PleMassScanner\Properties\PublishProfiles"; Flags: ignoreversion; Components: src
-Source: "Source\PleMassScanner\Properties\PublishProfiles\FolderProfile.pubxml.user"; DestDir: "{app}\Source\PleMassScanner\Properties\PublishProfiles"; Flags: ignoreversion; Components: src
-Source: "plescan.iss"; DestDir: "{app}\Source"; Flags: ignoreversion; Components: src
+Source: "PLE Scanner\*"; Excludes: "PLE Scanner\PLE Scanner\bin\*,PLE Scanner\PleMassScanner\bin\*"; DestDir: "{app}\Source"; Flags: createallsubdirs recursesubdirs; Components: src; 
 
 [Icons]
 Name: "{autostartmenu}\PLE QA Scanner 1"; Filename: "{app}\ple1\plescan.exe"; IconFilename: "{app}\ple1\plescan.exe"; IconIndex: 0; Components: ple1
@@ -918,15 +102,6 @@ Name: "ple1"; Description: "PLE QA Scanner (Original, one class at a time)"; Typ
 Name: "ple2"; Description: "PLE QA Scanner 2 (Multiple Classes at once)"; Types: compact custom full
 Name: "src"; Description: "Visual Studio 2019 Solution for PLE (VB .NET Framework 4.8) and PLE 2 (C# .NET 5)"; Types: custom full
 
-[CustomMessages]
-IDP_DownloadFailed=Download of .NET Framework 4.8 failed. .NET Framework 4.8 is required to run PLE QA Scanner 1.
-IDP_RetryCancel=Click 'Retry' to try downloading the files again, or click 'Cancel' to terminate setup.
-InstallingDotNetFramework=Installing .NET Framework 4.8. This might take a few minutes...
-DotNetFrameworkFailedToLaunch=Failed to launch .NET Framework Installer with error "%1". ple11ase fix the error then run this installer again.
-DotNetFrameworkFailed1602=.NET Framework installation was cancelled. This installation can continue, but be aware that this application may not run unless the .NET Framework installation is comple11ted successfully.
-DotNetFrameworkFailed1603=A fatal error occurred while installing the .NET Framework. ple11ase fix the error, then run the installer again.
-DotNetFrameworkFailed5100=Your computer does not meet the requirements of the .NET Framework. ple11ase consult the documentation.
-DotNetFrameworkFailedOther=The .NET Framework installer exited with an unexpected status code "%1". ple11ase review any other messages shown by the installer to determine whether the installation comple11ted successfully, and abort this installation and fix the problem if it did not.
 
 
 [InstallDelete]
@@ -939,287 +114,669 @@ Type: filesandordirs; Name: "{app}\Source\*.*"
 Type: dirifempty; Name: "{app}\Source"
 Type: files; Name: "{autostartmenu}\PLE QA Scanner.lnk"
 
-[Dirs]
-Name: "{app}\ple2\arm64"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Ad Blocking"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\AutofillStates"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\BrowserMetrics"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\CertificateRevocation"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271\_metadata"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Crashpad"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Crashpad\reports"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\blob_storage"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Cache"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Code Cache"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Code Cache\js"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Code Cache\js\index-dir"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Code Cache\wasm"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Code Cache\wasm\index-dir"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\EdgePushStorageWithConnectTokenAndKey"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Extension State"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\AvailabilityDB"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\GPUCache"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Local Storage"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Session Storage"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Sessions"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Sync Data"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Edge Shopping"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\GrShaderCache"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\GrShaderCache\GPUCache"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\RecoveryImproved"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Safe Browsing"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\ShaderCache"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\ShaderCache\GPUCache"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\SmartScreen"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\SmartScreen\local"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\SmartScreen\remote"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Subresource Filter"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Subresource Filter\Indexed Rules"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Subresource Filter\Indexed Rules\27"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Subresource Filter\Indexed Rules\27\9.18.0"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules\9.18.0"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules\9.18.0\_metadata"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"; Components: ple2
-Name: "{app}\ple2\plescan2.exe.WebView2\EBWebView\WidevineCdm"; Components: ple2
-Name: "{app}\ple2\ref"; Components: ple2
-Name: "{app}\ple2\runtimes"; Components: ple2
-Name: "{app}\ple2\runtimes\win-arm"; Components: ple2
-Name: "{app}\ple2\runtimes\win-arm\native"; Components: ple2
-Name: "{app}\ple2\runtimes\win-x64"; Components: ple2
-Name: "{app}\ple2\runtimes\win-x64\native"; Components: ple2
-Name: "{app}\ple2\runtimes\win-x86"; Components: ple2
-Name: "{app}\ple2\runtimes\win-x86\native"; Components: ple2
-Name: "{app}\ple2\win-x64"; Components: ple2
-Name: "{app}\ple2\win-x64\arm64"; Components: ple2
-Name: "{app}\ple2\win-x64\cs"; Components: ple2
-Name: "{app}\ple2\win-x64\de"; Components: ple2
-Name: "{app}\ple2\win-x64\es"; Components: ple2
-Name: "{app}\ple2\win-x64\fr"; Components: ple2
-Name: "{app}\ple2\win-x64\it"; Components: ple2
-Name: "{app}\ple2\win-x64\ja"; Components: ple2
-Name: "{app}\ple2\win-x64\ko"; Components: ple2
-Name: "{app}\ple2\win-x64\pl"; Components: ple2
-Name: "{app}\ple2\win-x64\pt-BR"; Components: ple2
-Name: "{app}\ple2\win-x64\ref"; Components: ple2
-Name: "{app}\ple2\win-x64\ru"; Components: ple2
-Name: "{app}\ple2\win-x64\tr"; Components: ple2
-Name: "{app}\ple2\win-x64\x64"; Components: ple2
-Name: "{app}\ple2\win-x64\x86"; Components: ple2
-Name: "{app}\ple2\win-x64\zh-Hans"; Components: ple2
-Name: "{app}\ple2\win-x64\zh-Hant"; Components: ple2
-Name: "{app}\ple2\x64"; Components: ple2
-Name: "{app}\ple2\x86"; Components: ple2
-Name: "{app}\plescan2.exe.WebView2"
-Name: "{app}\plescan2.exe.WebView2\EBWebView"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Ad Blocking"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\AutofillStates"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\BrowserMetrics"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\CertificateRevocation"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\CertificateRevocation\6271\_metadata"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Crashpad"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Crashpad\reports"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\AutofillStrikeDatabase"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\blob_storage"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\BudgetDatabase"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Cache"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Code Cache"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Code Cache\js"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Code Cache\js\index-dir"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Code Cache\wasm"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Code Cache\wasm\index-dir"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\data_reduction_proxy_leveldb"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\EdgePushStorageWithConnectTokenAndKey"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Extension State"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\AvailabilityDB"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Feature Engagement Tracker\EventDB"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\GPUCache"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Local Storage"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Local Storage\leveldb"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Platform Notifications"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Session Storage"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Sessions"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\shared_proto_db\metadata"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Site Characteristics Database"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Sync Data"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Default\Sync Data\LevelDB"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Edge Shopping"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Edge Shopping\2.0.0.315"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\GrShaderCache"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\GrShaderCache\GPUCache"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\RecoveryImproved"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Safe Browsing"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\ShaderCache"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\ShaderCache\GPUCache"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\SmartScreen"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\SmartScreen\local"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\SmartScreen\remote"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Subresource Filter"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Subresource Filter\Indexed Rules"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Subresource Filter\Indexed Rules\27"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Subresource Filter\Indexed Rules\27\9.18.0"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules\9.18.0"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Subresource Filter\Unindexed Rules\9.18.0\_metadata"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Trust Protection Lists"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\Trust Protection Lists\1.0.0.18"
-Name: "{app}\plescan2.exe.WebView2\EBWebView\WidevineCdm"
-Name: "{app}\ref"
-Name: "{app}\runtimes"
-Name: "{app}\runtimes\win-arm"
-Name: "{app}\runtimes\win-arm\native"
-Name: "{app}\runtimes\win-x64"
-Name: "{app}\runtimes\win-x64\native"
-Name: "{app}\runtimes\win-x86"
-Name: "{app}\runtimes\win-x86\native"
-Name: "{app}\win-x64"
-Name: "{app}\win-x64\arm64"
-Name: "{app}\win-x64\cs"
-Name: "{app}\win-x64\de"
-Name: "{app}\win-x64\es"
-Name: "{app}\win-x64\fr"
-Name: "{app}\win-x64\it"
-Name: "{app}\win-x64\ja"
-Name: "{app}\win-x64\ko"
-Name: "{app}\win-x64\pl"
-Name: "{app}\win-x64\pt-BR"
-Name: "{app}\win-x64\ref"
-Name: "{app}\win-x64\ru"
-Name: "{app}\win-x64\tr"
-Name: "{app}\win-x64\x64"
-Name: "{app}\win-x64\x86"
-Name: "{app}\win-x64\zh-Hans"
-Name: "{app}\win-x64\zh-Hant"
-Name: "{app}\x64"
-Name: "{app}\x86"
+
 
 [Code]
-var
-  requiresRestart: boolean;
-
-// Is the .NET Framework missing?
-function NetFrameworkIsMissing(): Boolean;
-var
-  bSuccess: Boolean;
-  regVersion: Cardinal;
-begin
-  // Assume it is missing
-  Result := True;
-
-  // Attempt to prove otherwise
-  bSuccess := RegQueryDWordValue(HKLM, 'Software\Microsoft\NET Framework Setup\NDP\v4\Full', 'Release', regVersion);
-  if (True = bSuccess) and (regVersion >= 528040) then begin
-    Result := False;
+// types and variables
+type
+  TDependency = record
+    Filename: String;
+    Parameters: String;
+    Title: String;
+    URL: String;
+    Checksum: String;
+    ForceSuccess: Boolean;
+    InstallClean: Boolean;
+    RebootAfter: Boolean;
   end;
+
+  InstallResult = (InstallSuccessful, InstallRebootRequired, InstallError);
+
+var
+  MemoInstallInfo: String;
+  Dependencies: array of TDependency;
+  DelayedReboot, ForceX86: Boolean;
+  DownloadPage: TDownloadWizardPage;
+
+procedure AddDependency(const Filename, Parameters, Title, URL, Checksum: String; const ForceSuccess, InstallClean, RebootAfter: Boolean);
+var
+  Dependency: TDependency;
+  I: Integer;
+begin
+  MemoInstallInfo := MemoInstallInfo + #13#10 + '%1' + Title;
+
+  Dependency.Filename := Filename;
+  Dependency.Parameters := Parameters;
+  Dependency.Title := Title;
+
+  if FileExists(ExpandConstant('{tmp}{\}') + Filename) then begin
+    Dependency.URL := '';
+  end else begin
+    Dependency.URL := URL;
+  end;
+
+  Dependency.Checksum := Checksum;
+  Dependency.ForceSuccess := ForceSuccess;
+  Dependency.InstallClean := InstallClean;
+  Dependency.RebootAfter := RebootAfter;
+
+  I := GetArrayLength(Dependencies);
+  SetArrayLength(Dependencies, I + 1);
+  Dependencies[I] := Dependency;
 end;
 
-function Net5IsMissing(): Boolean;
+function IsPendingReboot: Boolean;
 var
-  bSuccess: Boolean;
-  regVersion: Cardinal;
+  Value: String;
 begin
-  // Assume it is missing
-  Result := True;
-
-  // Attempt to prove otherwise
-  bSuccess := RegQueryDWordValue(HKLM, 'Software\Microsoft\NET Framework Setup\NDP\v4\Full', 'Release', regVersion);
-  if (True = bSuccess) and (regVersion >= 528040) then begin
-    Result := False;
-  end;
+  Result := RegQueryMultiStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Session Manager', 'PendingFileRenameOperations', Value) or
+    (RegQueryMultiStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Session Manager', 'SetupExecute', Value) and (Value <> ''));
 end;
 
-procedure InitializeWizard;
-begin
-  if NetFrameworkIsMissing() then
-  begin
-    idpAddFile('http://go.microsoft.com/fwlink/?LinkId=2085155', ExpandConstant('{tmp}\NetFrameworkInstaller.exe'));
-    idpDownloadAfter(wpReady);
-  end;
-end;
-
-// Install .NET Framework
-function InstallFramework(): String;
+function InstallProducts: InstallResult;
 var
-  StatusText: string;
-  ResultCode: Integer;
+  ResultCode, I, ProductCount: Integer;
 begin
-  StatusText := WizardForm.StatusLabel.Caption;
-  WizardForm.StatusLabel.Caption := CustomMessage('InstallingDotNetFramework');
-  WizardForm.ProgressGauge.Style := npbstMarquee;
-  try
-    if not Exec(ExpandConstant('{tmp}\NetFrameworkInstaller.exe'), '/passive /norestart /showrmui /showfinalerror', '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then
-    begin
-      Result := FmtMessage(CustomMessage('DotNetFrameworkFailedToLaunch'), [SysErrorMessage(resultCode)]);
-    end
-    else
-    begin
-      // See https://msdn.microsoft.com/en-us/library/ee942965(v=vs.110).aspx#return_codes
-      case resultCode of
-        0: begin
-          // Successful
+  Result := InstallSuccessful;
+  ProductCount := GetArrayLength(Dependencies);
+  MemoInstallInfo := SetupMessage(msgReadyMemoTasks);
+
+  if ProductCount > 0 then begin
+    DownloadPage.Show;
+
+    for I := 0 to ProductCount - 1 do begin
+      if Dependencies[I].InstallClean and (DelayedReboot or IsPendingReboot) then begin
+        Result := InstallRebootRequired;
+        break;
+      end;
+
+      DownloadPage.SetText(Dependencies[I].Title, '');
+      DownloadPage.SetProgress(I + 1, ProductCount);
+
+      while True do begin
+        ResultCode := 0;
+        if ShellExec('', ExpandConstant('{tmp}{\}') + Dependencies[I].Filename, Dependencies[I].Parameters, '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode) then begin
+          if Dependencies[I].RebootAfter then begin
+            // delay reboot after install if we installed the last dependency anyways
+            if I = ProductCount - 1 then begin
+              DelayedReboot := True;
+            end else begin
+              Result := InstallRebootRequired;
+              MemoInstallInfo := Dependencies[I].Title;
+            end;
+            break;
+          end else if (ResultCode = 0) or Dependencies[I].ForceSuccess then begin
+            break;
+          end else if ResultCode = 3010 then begin
+            // Windows Installer ResultCode 3010: ERROR_SUCCESS_REBOOT_REQUIRED
+            DelayedReboot := True;
+            break;
+          end;
         end;
-        1602 : begin
-          MsgBox(CustomMessage('DotNetFrameworkFailed1602'), mbInformation, MB_OK);
-        end;
-        1603: begin
-          Result := CustomMessage('DotNetFrameworkFailed1603');
-        end;
-        1641: begin
-          requiresRestart := True;
-        end;
-        3010: begin
-          requiresRestart := True;
-        end;
-        5100: begin
-          Result := CustomMessage('DotNetFrameworkFailed5100');
-        end;
-        else begin
-          MsgBox(FmtMessage(CustomMessage('DotNetFrameworkFailedOther'), [IntToStr(resultCode)]), mbError, MB_OK);
+
+        case SuppressibleMsgBox(FmtMessage(SetupMessage(msgErrorFunctionFailed), [Dependencies[I].Title, IntToStr(ResultCode)]), mbError, MB_ABORTRETRYIGNORE, IDIGNORE) of
+          IDABORT: begin
+            Result := InstallError;
+            MemoInstallInfo := MemoInstallInfo + #13#10 + '      ' + Dependencies[I].Title;
+            break;
+          end;
+          IDIGNORE: begin
+            MemoInstallInfo := MemoInstallInfo + #13#10 + '      ' + Dependencies[I].Title;
+            break;
+          end;
         end;
       end;
+
+      if Result <> InstallSuccessful then begin
+        break;
+      end;
     end;
-  finally
-    WizardForm.StatusLabel.Caption := StatusText;
-    WizardForm.ProgressGauge.Style := npbstNormal;
-    
-    DeleteFile(ExpandConstant('{tmp}\NetFrameworkInstaller.exe'));
+
+    DownloadPage.Hide;
   end;
+end;
+
+// Inno Setup event functions
+procedure InitializeWizard;
+begin
+  DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), nil);
 end;
 
 function PrepareToInstall(var NeedsRestart: Boolean): String;
+var
+  I: Integer;
 begin
-  // 'NeedsRestart' only has an effect if we return a non-empty string, thus aborting the installation.
-  // If the installers indicate that they want a restart, this should be done at the end of installation.
-  // Therefore we set the global 'restartRequired' if a restart is needed, and return this from NeedRestart()
+  DelayedReboot := False;
 
-  if NetFrameworkIsMissing() then
-  begin
-    Result := InstallFramework();
+  case InstallProducts of
+    InstallError: begin
+      Result := MemoInstallInfo;
+    end;
+    InstallRebootRequired: begin
+      Result := MemoInstallInfo;
+      NeedsRestart := True;
+
+      // write into the registry that the installer needs to be executed again after restart
+      RegWriteStringValue(HKEY_CURRENT_USER, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'InstallBootstrap', ExpandConstant('{srcexe}'));
+    end;
   end;
 end;
 
-function NeedRestart(): Boolean;
+function NeedRestart: Boolean;
 begin
-  Result := requiresRestart;
+  Result := DelayedReboot;
+end;
+
+function UpdateReadyMemo(const Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String;
+begin
+  Result := '';
+  if MemoUserInfoInfo <> '' then begin
+    Result := Result + MemoUserInfoInfo + Newline + NewLine;
+  end;
+  if MemoDirInfo <> '' then begin
+    Result := Result + MemoDirInfo + Newline + NewLine;
+  end;
+  if MemoTypeInfo <> '' then begin
+    Result := Result + MemoTypeInfo + Newline + NewLine;
+  end;
+  if MemoComponentsInfo <> '' then begin
+    Result := Result + MemoComponentsInfo + Newline + NewLine;
+  end;
+  if MemoGroupInfo <> '' then begin
+    Result := Result + MemoGroupInfo + Newline + NewLine;
+  end;
+  if MemoTasksInfo <> '' then begin
+    Result := Result + MemoTasksInfo;
+  end;
+
+  if MemoInstallInfo <> '' then begin
+    if MemoTasksInfo = '' then begin
+      Result := Result + SetupMessage(msgReadyMemoTasks);
+    end;
+    Result := Result + FmtMessage(MemoInstallInfo, [Space]);
+  end;
+end;
+
+function NextButtonClick(const CurPageID: Integer): Boolean;
+var
+  I, ProductCount: Integer;
+  Retry: Boolean;
+begin
+  Result := True;
+
+  if (CurPageID = wpReady) and (MemoInstallInfo <> '') then begin
+    DownloadPage.Show;
+
+    ProductCount := GetArrayLength(Dependencies);
+    for I := 0 to ProductCount - 1 do begin
+      if Dependencies[I].URL <> '' then begin
+        DownloadPage.Clear;
+        DownloadPage.Add(Dependencies[I].URL, Dependencies[I].Filename, Dependencies[I].Checksum);
+
+        Retry := True;
+        while Retry do begin
+          Retry := False;
+
+          try
+            DownloadPage.Download;
+          except
+            if GetExceptionMessage = SetupMessage(msgErrorDownloadAborted) then begin
+              Result := False;
+              I := ProductCount;
+            end else begin
+              case SuppressibleMsgBox(AddPeriod(GetExceptionMessage), mbError, MB_ABORTRETRYIGNORE, IDIGNORE) of
+                IDABORT: begin
+                  Result := False;
+                  I := ProductCount;
+                end;
+                IDRETRY: begin
+                  Retry := True;
+                end;
+              end;
+            end;
+          end;
+        end;
+      end;
+    end;
+
+    DownloadPage.Hide;
+  end;
+end;
+
+// architecture helper functions
+function IsX64: Boolean;
+begin
+  Result := not ForceX86 and Is64BitInstallMode;
+end;
+
+function GetString(const x86, x64: String): String;
+begin
+  if IsX64 then begin
+    Result := x64;
+  end else begin
+    Result := x86;
+  end;
+end;
+
+function GetArchitectureSuffix: String;
+begin
+  Result := GetString('', '_x64');
+end;
+
+function GetArchitectureTitle: String;
+begin
+  Result := GetString(' (x86)', ' (x64)');
+end;
+
+function CompareVersion(const Version1, Version2: String): Integer;
+var
+  Position, Number1, Number2: Integer;
+begin
+  Result := 0;
+  while (Version1 <> '') or (Version2 <> '') do begin
+    Position := Pos('.', Version1);
+    if Position > 0 then begin
+      Number1 := StrToIntDef(Copy(Version1, 1, Position - 1), 0);
+      Delete(Version1, 1, Position);
+    end else if Version1 <> '' then begin
+      Number1 := StrToIntDef(Version1, 0);
+      Version1 := '';
+    end else begin
+      Number1 := 0;
+    end;
+
+    Position := Pos('.', Version2);
+    if Position > 0 then begin
+      Number2 := StrToIntDef(Copy(Version2, 1, Position - 1), 0);
+      Delete(Version2, 1, Position);
+    end else if Version2 <> '' then begin
+      Number2 := StrToIntDef(Version2, 0);
+      Version2 := '';
+    end else begin
+      Number2 := 0;
+    end;
+
+    if Number1 < Number2 then begin
+      Result := -1;
+      break;
+    end else if Number1 > Number2 then begin
+      Result := 1;
+      break;
+    end;
+  end;
+end;
+
+#ifdef UseNetCoreCheck
+// source code: https://github.com/dotnet/deployment-tools/tree/master/src/clickonce/native/projects/NetCoreCheck
+function IsNetCoreInstalled(const Version: String): Boolean;
+var
+  ResultCode: Integer;
+begin
+  if not FileExists(ExpandConstant('{tmp}{\}') + 'netcorecheck' + GetArchitectureSuffix + '.exe') then begin
+    ExtractTemporaryFile('netcorecheck' + GetArchitectureSuffix + '.exe');
+  end;
+  Result := ShellExec('', ExpandConstant('{tmp}{\}') + 'netcorecheck' + GetArchitectureSuffix + '.exe', Version, '', SW_HIDE, ewWaitUntilTerminated, ResultCode) and (ResultCode = 0);
+end;
+#endif
+
+#ifdef UseMsiProductCheck
+function MsiEnumRelatedProducts(UpgradeCode: String; Reserved, Index: DWORD; ProductCode: String): Integer;
+external 'MsiEnumRelatedProductsW@msi.dll stdcall';
+
+function MsiGetProductInfo(ProductCode, PropertyName, Value: String; var ValueSize: DWORD): Integer;
+external 'MsiGetProductInfoW@msi.dll stdcall';
+
+function IsMsiProductInstalled(const UpgradeCode, MinVersion: String): Boolean;
+var
+  ProductCode, Version: String;
+  ValueSize: DWORD;
+begin
+  SetLength(ProductCode, 39);
+  Result := False;
+
+  if MsiEnumRelatedProducts(UpgradeCode, 0, 0, ProductCode) = 0 then begin
+    SetLength(Version, 39);
+    ValueSize := Length(Version);
+
+    if MsiGetProductInfo(ProductCode, 'VersionString', Version, ValueSize) = 0 then begin
+      Result := CompareVersion(Version, MinVersion) >= 0;
+    end;
+  end;
+end;
+#endif
+
+function InitializeSetup: Boolean;
+var
+  Version: String;
+begin
+#ifdef UseMsi45
+  // https://www.microsoft.com/en-US/download/details.aspx?id=8483
+  if not GetVersionNumbersString(ExpandConstant('{sys}{\}msi.dll'), Version) or (CompareVersion(Version, '4.5') < 0) then begin
+    AddDependency('msi45' + GetArchitectureSuffix + '.msu',
+      '/quiet /norestart',
+      'Windows Installer 4.5',
+      GetString('https://download.microsoft.com/download/2/6/1/261fca42-22c0-4f91-9451-0e0f2e08356d/Windows6.0-KB942288-v2-x86.msu', 'https://download.microsoft.com/download/2/6/1/261fca42-22c0-4f91-9451-0e0f2e08356d/Windows6.0-KB942288-v2-x64.msu'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDotNet11
+  // https://www.microsoft.com/en-US/download/details.aspx?id=26
+  if not IsDotNetInstalled(net11, 0) then begin
+    AddDependency('dotnetfx11.exe',
+      '/q',
+      '.NET Framework 1.1',
+      'https://download.microsoft.com/download/a/a/c/aac39226-8825-44ce-90e3-bf8203e74006/dotnetfx.exe',
+      '', False, False, False);
+  end;
+
+  // https://www.microsoft.com/en-US/download/details.aspx?id=33
+  if not IsDotNetInstalled(net11, 1) then begin
+    AddDependency('dotnetfx11sp1.exe',
+      '/q',
+      '.NET Framework 1.1 Service Pack 1',
+      'https://download.microsoft.com/download/8/b/4/8b4addd8-e957-4dea-bdb8-c4e00af5b94b/NDP1.1sp1-KB867460-X86.exe',
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDotNet20
+  // https://www.microsoft.com/en-US/download/details.aspx?id=1639
+  if not IsDotNetInstalled(net20, 2) then begin
+    AddDependency('dotnetfx20' + GetArchitectureSuffix + '.exe',
+      '/lang:enu /passive /norestart',
+      '.NET Framework 2.0 Service Pack 2',
+      GetString('https://download.microsoft.com/download/c/6/e/c6e88215-0178-4c6c-b5f3-158ff77b1f38/NetFx20SP2_x86.exe', 'https://download.microsoft.com/download/c/6/e/c6e88215-0178-4c6c-b5f3-158ff77b1f38/NetFx20SP2_x64.exe'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDotNet35
+  // https://www.microsoft.com/en-US/download/details.aspx?id=22
+  if not IsDotNetInstalled(net35, 1) then begin
+    AddDependency('dotnetfx35.exe',
+      '/lang:enu /passive /norestart',
+      '.NET Framework 3.5 Service Pack 1',
+      'https://download.microsoft.com/download/0/6/1/061f001c-8752-4600-a198-53214c69b51f/dotnetfx35setup.exe',
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDotNet40Client
+  // https://www.microsoft.com/en-US/download/details.aspx?id=24872
+  if not IsDotNetInstalled(net4client, 0) and not IsDotNetInstalled(net4full, 0) then begin
+    AddDependency('dotNetFx40_Client_setup.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      '.NET Framework 4.0 Client',
+      'https://download.microsoft.com/download/7/B/6/7B629E05-399A-4A92-B5BC-484C74B5124B/dotNetFx40_Client_setup.exe',
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDotNet40Full
+  // https://www.microsoft.com/en-US/download/details.aspx?id=17718
+  if not IsDotNetInstalled(net4full, 0) then begin
+    AddDependency('dotNetFx40_Full_setup.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      '.NET Framework 4.0',
+      'https://download.microsoft.com/download/1/B/E/1BE39E79-7E39-46A3-96FF-047F95396215/dotNetFx40_Full_setup.exe',
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDotNet45
+  // https://www.microsoft.com/en-US/download/details.aspx?id=42643
+  if not IsDotNetInstalled(net452, 0) then begin
+    AddDependency('dotnetfx45.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      '.NET Framework 4.5.2',
+      'https://download.microsoft.com/download/B/4/1/B4119C11-0423-477B-80EE-7A474314B347/NDP452-KB2901954-Web.exe',
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDotNet46
+  // https://www.microsoft.com/en-US/download/details.aspx?id=53345
+  if not IsDotNetInstalled(net462, 0) then begin
+    AddDependency('dotnetfx46.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      '.NET Framework 4.6.2',
+      'https://download.microsoft.com/download/D/5/C/D5C98AB0-35CC-45D9-9BA5-B18256BA2AE6/NDP462-KB3151802-Web.exe',
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDotNet47
+  // https://support.microsoft.com/en-US/help/4054531
+  if not IsDotNetInstalled(net472, 0) then begin
+    AddDependency('dotnetfx47.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      '.NET Framework 4.7.2',
+      'https://download.microsoft.com/download/0/5/C/05C1EC0E-D5EE-463B-BFE3-9311376A6809/NDP472-KB4054531-Web.exe',
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDotNet48
+  // https://dotnet.microsoft.com/download/dotnet-framework/net48
+  if not IsDotNetInstalled(net48, 0) then begin
+    AddDependency('dotnetfx48.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      '.NET Framework 4.8',
+      'https://download.visualstudio.microsoft.com/download/pr/7afca223-55d2-470a-8edc-6a1739ae3252/c9b8749dd99fc0d4453b2a3e4c37ba16/ndp48-web.exe',
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseNetCore31
+  // https://dotnet.microsoft.com/download/dotnet-core/3.1
+  if not IsNetCoreInstalled('Microsoft.NETCore.App 3.1.10') then begin
+    AddDependency('netcore31' + GetArchitectureSuffix + '.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      '.NET Core Runtime 3.1.10' + GetArchitectureTitle,
+      GetString('https://download.visualstudio.microsoft.com/download/pr/abb3fb5d-4e82-4ca8-bc03-ac13e988e608/b34036773a72b30c5dc5520ee6a2768f/dotnet-runtime-3.1.10-win-x86.exe', 'https://download.visualstudio.microsoft.com/download/pr/9845b4b0-fb52-48b6-83cf-4c431558c29b/41025de7a76639eeff102410e7015214/dotnet-runtime-3.1.10-win-x64.exe'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseNetCore31Asp
+  // https://dotnet.microsoft.com/download/dotnet-core/3.1
+  if not IsNetCoreInstalled('Microsoft.AspNetCore.App 3.1.10') then begin
+    AddDependency('netcore31asp' + GetArchitectureSuffix + '.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      'ASP.NET Core Runtime 3.1.10' + GetArchitectureTitle,
+      GetString('https://download.visualstudio.microsoft.com/download/pr/c0a1f953-81d3-4a1a-a584-a627b518c434/16e1af0d3ebe6edacde1eab155dd4d90/aspnetcore-runtime-3.1.10-win-x86.exe', 'https://download.visualstudio.microsoft.com/download/pr/c1ea0601-abe4-4c6d-96ed-131764bf5129/a1823d8ff605c30af412776e2e617a36/aspnetcore-runtime-3.1.10-win-x64.exe'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseNetCore31Desktop
+  // https://dotnet.microsoft.com/download/dotnet-core/3.1
+  if not IsNetCoreInstalled('Microsoft.WindowsDesktop.App 3.1.10') then begin
+    AddDependency('netcore31desktop' + GetArchitectureSuffix + '.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      '.NET Desktop Runtime 3.1.10' + GetArchitectureTitle,
+      GetString('https://download.visualstudio.microsoft.com/download/pr/865d0be5-16e2-4b3d-a990-f4c45acd280c/ec867d0a4793c0b180bae85bc3a4f329/windowsdesktop-runtime-3.1.10-win-x86.exe', 'https://download.visualstudio.microsoft.com/download/pr/513acf37-8da2-497d-bdaa-84d6e33c1fee/eb7b010350df712c752f4ec4b615f89d/windowsdesktop-runtime-3.1.10-win-x64.exe'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDotNet50
+  // https://dotnet.microsoft.com/download/dotnet/5.0
+  if not IsNetCoreInstalled('Microsoft.NETCore.App 5.0.1') then begin
+    AddDependency('dotnet50' + GetArchitectureSuffix + '.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      '.NET Runtime 5.0.1' + GetArchitectureTitle,
+      GetString('https://go.microsoft.com/fwlink/?linkid=2151355', 'https://go.microsoft.com/fwlink/?linkid=2150971'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDotNet50Asp
+  // https://dotnet.microsoft.com/download/dotnet/5.0
+  if not IsNetCoreInstalled('Microsoft.AspNetCore.App 5.0.1') then begin
+    AddDependency('dotnet50asp' + GetArchitectureSuffix + '.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      'ASP.NET Core Runtime 5.0.1' + GetArchitectureTitle,
+      GetString('https://go.microsoft.com/fwlink/?linkid=2151353', 'https://go.microsoft.com/fwlink/?linkid=2150969'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDotNet50Desktop
+  // https://dotnet.microsoft.com/download/dotnet/5.0
+  if not IsNetCoreInstalled('Microsoft.WindowsDesktop.App 5.0.1') then begin
+    AddDependency('dotnet50desktop' + GetArchitectureSuffix + '.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      '.NET Desktop Runtime 5.0.1' + GetArchitectureTitle,
+      GetString('https://go.microsoft.com/fwlink/?linkid=2151354', 'https://go.microsoft.com/fwlink/?linkid=2150970'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseVC2005
+  // https://www.microsoft.com/en-US/download/details.aspx?id=26347
+  if not IsMsiProductInstalled(GetString('{86C9D5AA-F00C-4921-B3F2-C60AF92E2844}', '{A8D19029-8E5C-4E22-8011-48070F9E796E}'), '8.0.61000') then begin
+    AddDependency('vcredist2005' + GetArchitectureSuffix + '.exe',
+      '/q',
+      'Visual C++ 2005 Service Pack 1 Redistributable' + GetArchitectureTitle,
+      GetString('https://download.microsoft.com/download/8/B/4/8B42259F-5D70-43F4-AC2E-4B208FD8D66A/vcredist_x86.EXE', 'https://download.microsoft.com/download/8/B/4/8B42259F-5D70-43F4-AC2E-4B208FD8D66A/vcredist_x64.EXE'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseVC2008
+  // https://www.microsoft.com/en-US/download/details.aspx?id=26368
+  if not IsMsiProductInstalled(GetString('{DE2C306F-A067-38EF-B86C-03DE4B0312F9}', '{FDA45DDF-8E17-336F-A3ED-356B7B7C688A}'), '9.0.30729.6161') then begin
+    AddDependency('vcredist2008' + GetArchitectureSuffix + '.exe',
+      '/q',
+      'Visual C++ 2008 Service Pack 1 Redistributable' + GetArchitectureTitle,
+      GetString('https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x86.exe', 'https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x64.exe'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseVC2010
+  // https://www.microsoft.com/en-US/download/details.aspx?id=26999
+  if not IsMsiProductInstalled(GetString('{1F4F1D2A-D9DA-32CF-9909-48485DA06DD5}', '{5B75F761-BAC8-33BC-A381-464DDDD813A3}'), '10.0.40219') then begin
+    AddDependency('vcredist2010' + GetArchitectureSuffix + '.exe',
+      '/passive /norestart',
+      'Visual C++ 2010 Service Pack 1 Redistributable' + GetArchitectureTitle,
+      GetString('https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe', 'https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseVC2012
+  // https://www.microsoft.com/en-US/download/details.aspx?id=30679
+  if not IsMsiProductInstalled(GetString('{4121ED58-4BD9-3E7B-A8B5-9F8BAAE045B7}', '{EFA6AFA1-738E-3E00-8101-FD03B86B29D1}'), '11.0.61030') then begin
+    AddDependency('vcredist2012' + GetArchitectureSuffix + '.exe',
+      '/passive /norestart',
+      'Visual C++ 2012 Update 4 Redistributable' + GetArchitectureTitle,
+      GetString('https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x86.exe', 'https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x64.exe'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseVC2013
+  //ForceX86 := True; // force 32-bit install of next dependencies
+  // https://support.microsoft.com/en-US/help/4032938
+  if not IsMsiProductInstalled(GetString('{B59F5BF1-67C8-3802-8E59-2CE551A39FC5}', '{20400CF0-DE7C-327E-9AE4-F0F38D9085F8}'), '12.0.40664') then begin
+    AddDependency('vcredist2013' + GetArchitectureSuffix + '.exe',
+      '/passive /norestart',
+      'Visual C++ 2013 Update 5 Redistributable' + GetArchitectureTitle,
+      GetString('https://download.visualstudio.microsoft.com/download/pr/10912113/5da66ddebb0ad32ebd4b922fd82e8e25/vcredist_x86.exe', 'https://download.visualstudio.microsoft.com/download/pr/10912041/cee5d6bca2ddbcd039da727bf4acb48a/vcredist_x64.exe'),
+      '', False, False, False);
+  end;
+  //ForceX86 := False; // disable forced 32-bit install again
+#endif
+
+#ifdef UseVC2015To2019
+  // https://support.microsoft.com/en-US/help/2977003/the-latest-supported-visual-c-downloads
+  if not IsMsiProductInstalled(GetString('{65E5BD06-6392-3027-8C26-853107D3CF1A}', '{36F68A90-239C-34DF-B58C-64B30153CE35}'), '14.28.29325') then begin
+    AddDependency('vcredist2019' + GetArchitectureSuffix + '.exe',
+      '/passive /norestart',
+      'Visual C++ 2015-2019 Redistributable' + GetArchitectureTitle,
+      GetString('https://aka.ms/vs/16/release/vc_redist.x86.exe', 'https://aka.ms/vs/16/release/vc_redist.x64.exe'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseDirectX
+  // https://www.microsoft.com/en-US/download/details.aspx?id=35
+  ExtractTemporaryFile('dxwebsetup.exe');
+  AddDependency('dxwebsetup.exe',
+    '/q',
+    'DirectX Runtime',
+    'https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe',
+    '', True, False, False);
+#endif
+
+#ifdef UseSql2008Express
+  // https://www.microsoft.com/en-US/download/details.aspx?id=30438
+  if not RegQueryStringValue(HKLM, 'SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQLServer\CurrentVersion', 'CurrentVersion', Version) or (CompareVersion(Version, '10.50.4000') < 0) then begin
+    AddDependency('sql2008express' + GetArchitectureSuffix + '.exe',
+      '/QS /IACCEPTSQLSERVERLICENSETERMS /ACTION=INSTALL /FEATURES=SQL /INSTANCENAME=MSSQLSERVER',
+      'SQL Server 2008 R2 Service Pack 2 Express',
+      GetString('https://download.microsoft.com/download/0/4/B/04BE03CD-EAF3-4797-9D8D-2E08E316C998/SQLEXPR32_x86_ENU.exe', 'https://download.microsoft.com/download/0/4/B/04BE03CD-EAF3-4797-9D8D-2E08E316C998/SQLEXPR_x64_ENU.exe'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseSql2012Express
+  // https://www.microsoft.com/en-US/download/details.aspx?id=56042
+  if not RegQueryStringValue(HKLM, 'SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQLServer\CurrentVersion', 'CurrentVersion', Version) or (CompareVersion(Version, '11.0.7001') < 0) then begin
+    AddDependency('sql2012express' + GetArchitectureSuffix + '.exe',
+      '/QS /IACCEPTSQLSERVERLICENSETERMS /ACTION=INSTALL /FEATURES=SQL /INSTANCENAME=MSSQLSERVER',
+      'SQL Server 2012 Service Pack 4 Express',
+      GetString('https://download.microsoft.com/download/B/D/E/BDE8FAD6-33E5-44F6-B714-348F73E602B6/SQLEXPR32_x86_ENU.exe', 'https://download.microsoft.com/download/B/D/E/BDE8FAD6-33E5-44F6-B714-348F73E602B6/SQLEXPR_x64_ENU.exe'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseSql2014Express
+  // https://www.microsoft.com/en-US/download/details.aspx?id=57473
+  if not RegQueryStringValue(HKLM, 'SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQLServer\CurrentVersion', 'CurrentVersion', Version) or (CompareVersion(Version, '12.0.6024') < 0) then begin
+    AddDependency('sql2014express' + GetArchitectureSuffix + '.exe',
+      '/QS /IACCEPTSQLSERVERLICENSETERMS /ACTION=INSTALL /FEATURES=SQL /INSTANCENAME=MSSQLSERVER',
+      'SQL Server 2014 Service Pack 3 Express',
+      GetString('https://download.microsoft.com/download/3/9/F/39F968FA-DEBB-4960-8F9E-0E7BB3035959/SQLEXPR32_x86_ENU.exe', 'https://download.microsoft.com/download/3/9/F/39F968FA-DEBB-4960-8F9E-0E7BB3035959/SQLEXPR_x64_ENU.exe'),
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseSql2016Express
+  // https://www.microsoft.com/en-US/download/details.aspx?id=56840
+  if not RegQueryStringValue(HKLM, 'SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQLServer\CurrentVersion', 'CurrentVersion', Version) or (CompareVersion(Version, '13.0.5026') < 0) then begin
+    AddDependency('sql2016express' + GetArchitectureSuffix + '.exe',
+      '/QS /IACCEPTSQLSERVERLICENSETERMS /ACTION=INSTALL /FEATURES=SQL /INSTANCENAME=MSSQLSERVER',
+      'SQL Server 2016 Service Pack 2 Express',
+      'https://download.microsoft.com/download/3/7/6/3767D272-76A1-4F31-8849-260BD37924E4/SQLServer2016-SSEI-Expr.exe',
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseSql2017Express
+  // https://www.microsoft.com/en-US/download/details.aspx?id=55994
+  if not RegQueryStringValue(HKLM, 'SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQLServer\CurrentVersion', 'CurrentVersion', Version) or (CompareVersion(Version, '14') < 0) then begin
+    AddDependency('sql2017express' + GetArchitectureSuffix + '.exe',
+      '/QS /IACCEPTSQLSERVERLICENSETERMS /ACTION=INSTALL /FEATURES=SQL /INSTANCENAME=MSSQLSERVER',
+      'SQL Server 2017 Express',
+      'https://download.microsoft.com/download/5/E/9/5E9B18CC-8FD5-467E-B5BF-BADE39C51F73/SQLServer2017-SSEI-Expr.exe',
+      '', False, False, False);
+  end;
+#endif
+
+#ifdef UseSql2019Express
+  // https://www.microsoft.com/en-US/download/details.aspx?id=101064
+  if not RegQueryStringValue(HKLM, 'SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQLServer\CurrentVersion', 'CurrentVersion', Version) or (CompareVersion(Version, '15') < 0) then begin
+    AddDependency('sql2019express' + GetArchitectureSuffix + '.exe',
+      '/QS /IACCEPTSQLSERVERLICENSETERMS /ACTION=INSTALL /FEATURES=SQL /INSTANCENAME=MSSQLSERVER',
+      'SQL Server 2019 Express',
+      'https://download.microsoft.com/download/7/f/8/7f8a9c43-8c8a-4f7c-9f92-83c18d96b681/SQL2019-SSEI-Expr.exe',
+      '', False, False, False);
+  end;
+#endif
+
+  Result := True;
 end;

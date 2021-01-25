@@ -5,9 +5,6 @@ C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teachi
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\Build\net5.0-windows\PleMassScanner.dll
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\Build\net5.0-windows\ref\PleMassScanner.dll
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\Build\net5.0-windows\PleMassScanner.pdb
-C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\x86\WebView2Loader.dll
-C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\x64\WebView2Loader.dll
-C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\arm64\WebView2Loader.dll
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.exe
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.visualelementsmanifest.xml
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.deps.json
@@ -16,22 +13,14 @@ C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teachi
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.dll
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\ref\plescan2.dll
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\plescan2.pdb
-C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\Microsoft.Web.WebView2.Core.dll
-C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\Microsoft.Web.WebView2.WinForms.dll
-C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\Microsoft.Web.WebView2.Wpf.dll
-C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\runtimes\win-arm\native\WebView2Loader.dll
-C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\runtimes\win-x64\native\WebView2Loader.dll
-C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\bin\Release\net5.0-windows\runtimes\win-x86\native\WebView2Loader.dll
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.csprojAssemblyReference.cache
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.frmMassScan.resources
-C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.ScannerLog.resources
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.ScanProgress.resources
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.csproj.GenerateResource.cache
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.AssemblyInfoInputs.cache
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.AssemblyInfo.cs
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.csproj.CoreCompileInputs.cache
-C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\PleMassScanner.csproj.CopyComplete
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\plescan2.dll
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\ref\plescan2.dll
 C:\Users\Micha\OneDrive - Old Dominion University\Center for Learning and Teaching\Documents\PLE Scanner App\PLE Scanner\PleMassScanner\obj\Release\net5.0-windows\plescan2.pdb

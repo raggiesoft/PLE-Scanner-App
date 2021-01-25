@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "K6gy+qNdULJhcX7IegiR9+5MkNygDtZAuMDa4JBk+A88hoZ3qStQms36Y/0ICZPHIbCV5YqG5j4JrlRAfyDOhw==",
+  "dgSpecHash": "Yxg3bnuGw5ozanSuzduKpDtYPMeNm26grG/7YKJ3RyYgHNauzWNvMCunWwmHDGwHyYcs14otKCLhfOkBqY2miA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Micha\\OneDrive - Old Dominion University\\Center for Learning and Teaching\\Documents\\PLE Scanner App\\PLE Scanner\\PleMassScanner\\PleMassScanner.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Micha\\.nuget\\packages\\microsoft.web.webview2\\1.0.664.37\\microsoft.web.webview2.1.0.664.37.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }

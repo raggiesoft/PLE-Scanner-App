@@ -7,9 +7,6 @@
     <Compile Update="frmMassScan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="ScannerLog.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="ScanProgress.cs">
       <SubType>Form</SubType>
     </Compile>

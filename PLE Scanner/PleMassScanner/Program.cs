@@ -170,7 +170,7 @@ namespace PleMassScanner
 
                         ScanningProgress.SetLabel("Starting Job " + (i+1) + " of " + CSVLen);
                         // Build our URI
-                        string BaseURI = "http://ple.odu.edu/courses/" + CSVArray[CourseYear] + CSVArray[CourseSemester] + "/" + CSVArray[CourseName] + "/editor/options/accessibility_scan?" + CSVArray[CourseName] + "_" + CSVArray[CourseYear] + CSVArray[CourseSemester];
+                        string BaseURI = "https://ple.odu.edu/courses/" + CSVArray[CourseYear] + CSVArray[CourseSemester] + "/" + CSVArray[CourseName] + "/editor/options/accessibility_scan?" + CSVArray[CourseName] + "_" + CSVArray[CourseYear] + CSVArray[CourseSemester];
 
                         // Converts our string to a URI Object
                         Uri PLEWebsite = new Uri(BaseURI);
@@ -360,10 +360,9 @@ namespace PleMassScanner
                 HTMLData += "\t\t<meta name=\"color-scheme\" content=\"light dark\">" + Environment.NewLine;
                 HTMLData += "\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">" + Environment.NewLine;
                 HTMLData += "\t\t<!-- Load the alternate CSS first ... -->" + Environment.NewLine;
-                HTMLData += "\t\t<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cyborg/bootstrap.min.css\" media=\"(prefers-color-scheme: dark)\" />" + Environment.NewLine;
+                HTMLData += "\t\t<link rel=\"stylesheet\" href=\"https://raggiesoft.com/projects/odu/clt/ple-scanner/web-log/css/bootstrap.dark.min.css\" media=\"(prefers-color-scheme: dark)\" />" + Environment.NewLine;
                 HTMLData += "\t\t<!-- ... and then the primary CSS last for a fallback on very old browsers that don't support media filtering -->" + Environment.NewLine;
-                HTMLData += "\t\t<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cerulean/bootstrap.min.css\" media=\"(prefers-color-scheme: no-preference), (prefers-color-scheme: light)\" />" + Environment.NewLine;
-                HTMLData += "\t\t<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\" integrity=\"sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN\" crossorigin=\"anonymous\">" + Environment.NewLine;
+                HTMLData += "\t\t<link rel=\"stylesheet\" href=\"https://raggiesoft.com/projects/odu/clt/ple-scanner/web-log/css/bootstrap.light.min.css\" media=\"(prefers-color-scheme: no-preference), (prefers-color-scheme: light)\" />" + Environment.NewLine;
                 HTMLData += "\t\t<title>" + Application.ProductName + " - Log created on " + now.ToShortDateString() + "</title>" + Environment.NewLine;
                 HTMLData += "\t</head>" + Environment.NewLine;
 
@@ -427,18 +426,17 @@ namespace PleMassScanner
                 {
                     HTMLData += "\t\t\t\t<tr class=\"bg-warning text-light\">" + Environment.NewLine;
                 }
-                HTMLData += "\t\t\t\t\t<th scope=\"row\" class=\"bg-light text-dark border-right\">" + ClassName + "</td>" + Environment.NewLine;
+                HTMLData += "\t\t\t\t\t<th scope=\"row\" class=\"bg-light text-dark border-right\">" + ClassName + "</th>" + Environment.NewLine;
                 HTMLData += "\t\t\t\t\t<td>" + (JobNumber + 1) + "</td>" + Environment.NewLine;
-                
 
 
                 if (IsSuccessful)
                 {
-                    HTMLData += "\t\t\t\t\t<td><i class=\"fa fa-check-square mr-1\" aria-hidden=\"true\"></i>Success</td>" + Environment.NewLine;
+                    HTMLData += "\t\t\t\t\t<td><span class=\"mr-1\" aria-hidden=\"true\">&#9745;</span>Success</td>" + Environment.NewLine;
                 }
                 else
                 { 
-                    HTMLData += "\t\t\t\t\t<td><i class=\"fa fa-times-circle mr-1\" aria-hidden=\"true\"></i>Error: DNE</td>" + Environment.NewLine;
+                    HTMLData += "\t\t\t\t\t<td><span class=\"mr-1\" aria-hidden=\"true\">&#9746;</span>Error: DNE</td>" + Environment.NewLine;
                 }
 
                 // Now, we can fill out the rest of the data
@@ -452,7 +450,7 @@ namespace PleMassScanner
                     10 => "\t\t\t\t\t<td>10 &ndash; Fall</td>" + Environment.NewLine,
                     20 => "\t\t\t\t\t<td>20 &ndash; Spring</td>" + Environment.NewLine,
                     30 => "\t\t\t\t\t<td>30 &ndash; Summer</td>" + Environment.NewLine,
-                    _ => "\t\t\t\t\t<td><i class=\"fa fa-exclamation-triangle mr-1\" aria-hidden=\"true\">Unknown</td>" + Environment.NewLine, // Should not see this one
+                    _ => "\t\t\t\t\t<td><span class=\"mr-1\" aria-hidden=\"true\">&#9744;</span>Unknown</td>" + Environment.NewLine, // Should not see this one
                 };
 
                 // Close our data row

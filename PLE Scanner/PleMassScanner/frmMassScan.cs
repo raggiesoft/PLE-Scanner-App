@@ -88,12 +88,13 @@ namespace PleMassScanner
                     DialogResult msg = MessageBox.Show("The scanning job(s) kicked off. However, one or more classes does not exist. A log is created at " + MyDocumentsFolder + "PLEScan-" + LoggingFileName + ".htm" + Environment.NewLine + Environment.NewLine + "Would you like to view the log?", PLEMassScanner.PLEApplication.ApplicationNameWithVersion(), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (msg == DialogResult.Yes)
                     {
+                        // Launches the log in your default browser
+                        // No more dependency on Microsoft Edge Chromium
 
-                        // .NET Core Workaround (been a bug since .NET Core 2 - remember that .NET 5 is the upgrade path for .NET Core AND .Net Framework)
-                        ScannerLog scanLog = new ScannerLog();
-                        scanLog.LoadLog(MyDocumentsFolder + "PLEScan-" + LoggingFileName + ".htm");
-                        scanLog.WindowState = FormWindowState.Maximized;
-                        scanLog.Show();
+                        System.Diagnostics.Process logFile = new System.Diagnostics.Process();
+                        logFile.StartInfo.FileName = MyDocumentsFolder + "PLEScan-" + LoggingFileName + ".htm";
+                        logFile.StartInfo.UseShellExecute = true;
+                        logFile.Start();
                     }
                     break;
             }
